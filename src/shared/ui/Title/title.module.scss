@@ -1,0 +1,42 @@
+@use "@shared/styles/_variables";
+@use "@shared/styles/_mixins";
+
+.title {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  padding: 0 0 0 variables.$spacing-unit * 20;
+
+  text-align: left;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: variables.$gradient-main;
+  }
+
+  &__text {
+    font-family: variables.$font-pt-sans;
+    font-size: 56px;
+    line-height: 120%;
+    font-weight: 700;
+  }
+
+  @include mixins.mobile {
+    padding: 0;
+
+    &::before {
+      display: none;
+    }
+
+    &__text {
+      font-size: 20px;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+@use "@shared/styles/_variables";
+@use "@shared/styles/_mixins";
+
+.dateCard {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: variables.$spacing-unit * 4;
+    max-width: 400px;
+
+    &__year {
+        font-family: variables.$font-bebas-neue;
+        font-size: 25px;
+        line-height: 120%;
+        font-weight: 400;
+        color: variables.$blue-light;
+    }
+
+    &__text {
+        font-family: variables.$font-pt-sans;
+        font-size: 20px;
+        line-height: 30px;
+        font-weight: 400;
+        color: variables.$gray-dark;
+    }
+}

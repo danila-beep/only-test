@@ -1,0 +1,42 @@
+@use "@shared/styles/_variables";
+
+.slider {
+  position: relative;
+
+  display: flex !important;
+  flex-direction: column-reverse;
+  align-items: start;
+  justify-content: start;
+
+  padding: 0 variables.$spacing-unit * 20 !important;
+
+  &__controls {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+
+    &__buttons {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      button {
+        pointer-events: auto;
+        background-color: variables.$white;
+        transition: opacity 0.3s ease-in-out;
+
+        &:disabled {
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+}

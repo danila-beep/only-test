@@ -1,0 +1,31 @@
+@use "@shared/styles/_variables";
+@use "@shared/styles/_mixins";
+
+.button {
+    padding: variables.$spacing-unit * 2;
+    border-radius: 10px;
+    background-color: transparent;
+
+    &:has([data-accent-color]) {
+        color: attr(data-accent-color);
+    }
+
+    &.rounded {
+        padding: 0;
+        width: 50px;
+        height: auto;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &.bordered {
+        border: 1px solid variables.$gray-dark;
+    }
+
+    &.shadowed {
+        box-shadow: variables.$shadow-md;
+    }
+}
