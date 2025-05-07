@@ -5,14 +5,14 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 15px;
-  width: 200px;
-  min-width: 200px;
-  max-width: 400px;
+  gap: variables.$spacing-unit * 4;
+  width: var(--min-width, #{variables.$dateCard-min-width});
+  min-width: var(--min-width, #{variables.$dateCard-min-width});
+  max-width: var(--max-width, #{variables.$dateCard-max-width});
 
   &__year {
     font-family: variables.$font-bebas-neue;
-    font-size: 25px;
+    font-size: var(--year-font-size, 25px);
     line-height: 120%;
     font-weight: 400;
     color: variables.$blue-light;
@@ -21,32 +21,25 @@
 
   &__text {
     font-family: variables.$font-pt-sans;
-    font-size: 20px;
-    line-height: 30px;
+    font-size: var(--text-font-size, 20px);
+    line-height: var(--text-line-height, 30px);
     font-weight: 400;
     color: variables.$gray-dark;
-    height: 90px;
+    height: var(--text-height, 90px);
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: var(--max-lines, 3);
     -webkit-box-orient: vertical;
     overflow: hidden;
     width: 100%;
   }
 
   @include mixins.mobile {
-    width: 150px;
-    min-width: 150px;
-    max-width: 300px;
-
-    &__year {
-      font-size: 16px;
-    }
-
-    &__text {
-      font-size: 14px;
-      line-height: 145%;
-      height: 80px;
-      -webkit-line-clamp: 4;
-    }
+    --min-width: #{variables.$dateCard-mobile-min-width};
+    --max-width: #{variables.$dateCard-mobile-max-width};
+    --year-font-size: 16px;
+    --text-font-size: 14px;
+    --text-line-height: 20px;
+    --text-height: 80px;
+    --max-lines: 4;
   }
 }

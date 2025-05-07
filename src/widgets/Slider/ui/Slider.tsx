@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
-import { ITimelineEvent } from "@shared/types/timeline";
+import { TimelineEvent } from "@shared/types/timeline";
 import { FreeMode } from "swiper/modules";
 import { Button } from "@shared/ui/Button/Button";
 import gsap from "gsap";
@@ -11,17 +11,16 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import { DateCard } from "@shared/ui/DateCard/DateCard";
 
-export const Slider = ({ data }: { data: ITimelineEvent[] }) => {
+export const Slider = ({ data }: { data: TimelineEvent[] }) => {
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const prevDataRef = useRef<ITimelineEvent[]>(data);
+  const prevDataRef = useRef<TimelineEvent[]>(data);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [activeIndex, setActiveIndex] = useState(0);
   
-  // Создаем строковое представление данных для сравнения
   const dataString = useMemo(() => JSON.stringify(data), [data]);
   const prevDataString = useRef(dataString);
 
@@ -40,7 +39,6 @@ export const Slider = ({ data }: { data: ITimelineEvent[] }) => {
   useEffect(() => {
     if (!containerRef.current || isAnimating) return;
 
-    // Проверяем, действительно ли изменились данные
     if (prevDataString.current !== dataString) {
       setIsAnimating(true);
       const slides = containerRef.current.querySelectorAll('.swiper-slide');
@@ -53,7 +51,6 @@ export const Slider = ({ data }: { data: ITimelineEvent[] }) => {
         }
       });
 
-      // Анимация исчезновения
       timeline.to(slides, {
         opacity: 0,
         y: 20,
@@ -61,12 +58,10 @@ export const Slider = ({ data }: { data: ITimelineEvent[] }) => {
         stagger: 0.05,
         ease: "power2.inOut",
         onComplete: () => {
-          // Обновляем Swiper после исчезновения
           swiper?.update();
         }
       });
 
-      // Анимация появления новых данных
       timeline.fromTo(
         slides,
         {
@@ -79,7 +74,7 @@ export const Slider = ({ data }: { data: ITimelineEvent[] }) => {
           duration: 0.4,
           stagger: 0.05,
           ease: "power2.out",
-          delay: 0.1 // Небольшая задержка для гарантии обновления DOM
+          delay: 0.1
         }
       );
     }

@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./circle.modile.scss";
+import classes from "./circle.module.scss"; 
 import { Timeline } from "@shared/types/timeline";
 
 type ActivePosition = "top" | "right" | "bottom" | "left";
@@ -24,14 +24,12 @@ export const Circle = ({
     setActiveTabHadler(index);
   };
 
-  // Получаем угол поворота всего круга
   const getCircleRotation = () => {
     const baseRotation = 300;
     const itemRotation = -currentActiveTabIndex * (360 / data.length);
     return itemRotation + baseRotation;
   };
 
-  // Получаем начальное положение для каждого элемента
   const getItemRotation = (index: number) => {
     return index * (360 / data.length);
   };

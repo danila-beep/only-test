@@ -10,7 +10,6 @@ export const YearCounter = ({ from, to }: { from: number; to: number }) => {
   useEffect(() => {
     if (!fromRef.current || !toRef.current) return;
 
-    // Анимация для первого числа
     gsap.to(counterRef.current, {
       from: from,
       duration: 1,
@@ -22,7 +21,6 @@ export const YearCounter = ({ from, to }: { from: number; to: number }) => {
       }
     });
 
-    // Анимация для второго числа
     gsap.to(counterRef.current, {
       to: to,
       duration: 1,

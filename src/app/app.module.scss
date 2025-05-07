@@ -1,4 +1,5 @@
 @use "@shared/styles/_variables";
+@use "@shared/styles/_mixins";
 
 .app_wrapper {
   min-height: 100vh;
@@ -6,4 +7,49 @@
 
   max-width: 1440px;
   margin: 0 auto;
+
+  padding-bottom: 80px;
+}
+
+.timline_variants_selection {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+
+  margin-top: 20px;
+
+  background-color: variables.$white;
+  padding: 16px 24px;
+  border-radius: 16px;
+  width: fit-content;
+
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+
+  p {
+    font-size: 24px;
+    font-weight: 400;
+    color: variables.$gray-dark;
+  }
+  
+  select {
+    padding: 10px;
+    border: 1px solid variables.$gray-dark;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 400;
+    color: variables.$gray-dark;
+  }
+
+  @include mixins.mobile {
+    flex-direction: column;
+    
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+  }
 }

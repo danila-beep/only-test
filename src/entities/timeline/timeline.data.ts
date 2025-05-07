@@ -188,3 +188,19 @@ export const MOCK_TIMELINE: Timeline = [
     ],
   }
 ];
+
+
+const MOCK_TIMELINE_2 = MOCK_TIMELINE.slice(0, 2);
+const MOCK_TIMELINE_3 = MOCK_TIMELINE.slice(0, 3);
+const MOCK_TIMELINE_4 = MOCK_TIMELINE.slice(0, 4);
+const MOCK_TIMELINE_5 = MOCK_TIMELINE.slice(0, 5);
+const MOCK_TIMELINE_6 = MOCK_TIMELINE.slice(0, 6);
+
+export const MOCK_TIMELINE_VARIANTS = {
+  "2_items": MOCK_TIMELINE_2,
+  "3_items": MOCK_TIMELINE_3,
+  "4_items": MOCK_TIMELINE_4,
+  "5_items": MOCK_TIMELINE_5,
+  "6_items": MOCK_TIMELINE_6,
+};
+

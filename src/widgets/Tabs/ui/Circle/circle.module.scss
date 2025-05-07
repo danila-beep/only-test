@@ -19,6 +19,8 @@ $circle-radius: 265px;
   transition: transform 0.6s ease-in-out;
   transform-origin: center center;
 
+  pointer-events: auto;
+
   @for $i from 2 through 6 {
     &--items-#{$i} {
       @include mixins.on-circle(

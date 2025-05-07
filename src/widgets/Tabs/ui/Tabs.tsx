@@ -1,53 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useCallback } from "react";
 import { Timeline } from "@shared/types/timeline";
-import { Circle } from "./Circle";
-import { YearCounter } from "./YearCounter";
-import { TabsControls } from "./TabsControls";
-
+import { Circle } from "./Circle/Circle";
+import { YearCounter } from "./YearCounter/YearCounter";
+import { TabsControls } from "./TabsControls/TabsControls";
+import { useMediaQuery } from "@shared/lib/hooks/useMediaQuery";
 import classes from "./tabs.module.scss";
 
-export const Tabs = ({
-  data,
-  activeTab,
-  setActiveTab,
-}: {
+interface TabsProps {
   data: Timeline;
   activeTab: number;
-  setActiveTab: (index: number) => void;
-}) => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  setActiveTab: (value: number | ((prev: number) => number)) => void;
+}
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+export const Tabs = ({ data, activeTab, setActiveTab }: TabsProps) => {
+  const { isMobile } = useMediaQuery();
 
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const setActiveTabHadler = (index: number) => {
+  const setActiveTabHadler = useCallback((index: number) => {
     setActiveTab(index);
-  };
+  }, [setActiveTab]);
 
-  const handlePrevTab = () => {
-    if (activeTab > 1) {
-      setActiveTab(activeTab - 1);
-    } else {
-      setActiveTab(6);
-    }
-  };
+  const handlePrevTab = useCallback(() => {
+    setActiveTab((prev: number) => prev > 1 ? prev - 1 : data.length);
+  }, [data.length, setActiveTab]);
 
-  const handleNextTab = () => {
-    if (activeTab < 6) {
-      setActiveTab(activeTab + 1);
-    } else {
-      setActiveTab(1);
-    }
-  };
+  const handleNextTab = useCallback(() => {
+    setActiveTab((prev: number) => prev < data.length ? prev + 1 : 1);
+  }, [data.length, setActiveTab]);
+
+  const yearRange = useMemo(() => {
+    const currentPeriod = data[activeTab - 1];
+    const firstYear = currentPeriod.events[0].date.getFullYear();
+    const lastYear = currentPeriod.events[currentPeriod.events.length - 1].date.getFullYear();
+    return { from: firstYear, to: lastYear };
+  }, [data, activeTab]);
 
   return (
     <div
@@ -63,10 +48,8 @@ export const Tabs = ({
           />
         )}
         <YearCounter
-          from={data[activeTab - 1].events[0].date.getFullYear()}
-          to={data[activeTab - 1].events[
-            data[data.length - 1].events.length - 1
-          ].date.getFullYear()}
+          from={yearRange.from}
+          to={yearRange.to}
         />
       </div>
 
