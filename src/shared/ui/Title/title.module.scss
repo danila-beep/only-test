@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   width: fit-content;
-  padding: 0 0 0 variables.$spacing-unit * 20;
+  padding: 0 0 0 80px;
 
   text-align: left;
 
@@ -28,8 +28,12 @@
     font-weight: 700;
   }
 
+  @include mixins.tablet {
+    padding: 0 0 0 40px;
+  }
+
   @include mixins.mobile {
-    padding: 0;
+    padding: 0 0 0 20px;
 
     &::before {
       display: none;
@@ -37,6 +41,7 @@
 
     &__text {
       font-size: 20px;
+      line-height: 120%;
     }
   }
 }

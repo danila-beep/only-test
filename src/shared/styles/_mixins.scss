@@ -1,14 +1,48 @@
 @use "@shared/styles/_variables";
 
-@mixin flex($direction: row, $justify: flex-start, $align: stretch) {
-  display: flex;
-  flex-direction: $direction;
-  justify-content: $justify;
-  align-items: $align;
+@mixin tablet {
+  @media (max-width: 1240px) {
+    @content;
+  }
 }
 
 @mixin mobile {
   @media (max-width: 768px) {
     @content;
+  }
+}
+
+@mixin on-circle($item-count, $circle-size, $item-size) {
+  position: relative;
+  width:  $circle-size;
+  height: $circle-size;
+  padding: 0;
+  border-radius: 50%; 
+  list-style: none;
+
+  > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: $item-size;
+    height: $item-size;
+    margin: calc($item-size / 2 * -1);
+
+    $angle: calc(360 / $item-count);
+    $rot: 0;
+
+    @for $i from 1 through $item-count {
+      &:nth-of-type(#{$i}) {
+        transform:
+          rotate(calc($rot * 1deg))
+          translate(calc($circle-size / 2))
+          rotate(calc($rot * -1deg));
+      }
+
+      $rot: calc($rot + $angle);
+    }
   }
 }

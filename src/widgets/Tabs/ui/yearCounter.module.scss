@@ -1,0 +1,57 @@
+@use "@shared/styles/_variables";
+@use "@shared/styles/_mixins";
+.yearCounter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 90px;
+
+  &__item {
+    user-select: none;
+    font-size: 200px;
+    font-weight: 700;
+    color: variables.$gray-dark;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease-in-out;
+    will-change: textContent;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &.from {
+      color: variables.$blue-dark;
+    }
+
+    &.to {
+      color: variables.$pink;
+    }
+  }
+
+  @include mixins.tablet {
+    gap: 40px;
+
+    &__item {
+      font-size: 150px;
+    }
+  }
+
+  @include mixins.mobile {
+    position: relative;
+    transform: none;
+    left: unset;
+    top: unset;
+
+    gap: 24px;
+
+    &__item {
+      font-size: 56px;
+    }
+  }
+}

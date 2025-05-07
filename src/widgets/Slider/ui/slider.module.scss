@@ -1,42 +1,97 @@
 @use "@shared/styles/_variables";
+@use "@shared/styles/_mixins";
+.slider_container {
+  position: relative;
+  width: 100%;
+  will-change: transform;
+}
 
 .slider {
   position: relative;
+  width: 100%;
+
+  cursor: grab;
+  cursor: -webkit-grab;
+
+  &:active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+  }
 
   display: flex !important;
-  flex-direction: column-reverse;
   align-items: start;
   justify-content: start;
 
-  padding: 0 variables.$spacing-unit * 20 !important;
+  padding: 0 80px !important;
 
-  &__controls {
+  & > div:nth-child(1) {
+    display: flex;
+    flex-direction: row;
+  }
+
+  :global {
+    .swiper-slide {
+      width: auto !important;
+      height: auto !important;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+      will-change: transform, opacity;
+    }
+  }
+
+  &__slide {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  @include mixins.tablet {
+    padding: 0 40px !important;
+  }
+
+  @include mixins.mobile {
+    padding: 0 20px !important;
+  }
+}
+
+.slider__controls {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+
+  &__buttons {
     position: absolute;
-    inset: 0;
-    z-index: 10;
-    pointer-events: none;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    &__buttons {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    button {
+      pointer-events: auto;
+      background-color: variables.$white;
+      transition: all 0.3s ease-in-out;
 
-      button {
-        pointer-events: auto;
-        background-color: variables.$white;
-        transition: opacity 0.3s ease-in-out;
-
-        &:disabled {
-          opacity: 0;
-          visibility: hidden;
-          pointer-events: none;
-        }
+      &:disabled {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
       }
+
+      &:not(:disabled):hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  @include mixins.mobile {
+    &__buttons {
+      display: none;
     }
   }
 }

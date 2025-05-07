@@ -1,0 +1,9 @@
+@use "@shared/styles/_variables";
+
+.app_wrapper {
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  max-width: 1440px;
+  margin: 0 auto;
+}

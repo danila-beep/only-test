@@ -1,0 +1,35 @@
+@use "@shared/styles/_variables";
+@use "@shared/styles/_mixins";
+.tabs__controls {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 20px;
+  margin-top: -80px;
+
+  &__pagination {
+    font-family: variables.$font-pt-sans;
+    font-size: 14px;
+    font-weight: 400;
+    color: variables.$gray-dark;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  @include mixins.mobile {
+    margin-top: 0px;
+  }
+}
