@@ -2,30 +2,40 @@
 @use "@shared/styles/_mixins";
 
 .button {
-    padding: variables.$spacing-unit * 2;
-    border-radius: 10px;
-    background-color: transparent;
+  padding: 8px 16px;
+  border-radius: 10px;
+  background-color: transparent;
 
-    &:has([data-accent-color]) {
-        color: attr(data-accent-color);
-    }
+  &:has([data-accent-color]) {
+    color: attr(data-accent-color);
+  }
 
+  &.rounded {
+    padding: 0;
+    width: 50px;
+    height: auto;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &.bordered {
+    border: 1px solid variables.$gray-dark;
+  }
+
+  &.shadowed {
+    box-shadow: variables.$shadow-md;
+  }
+
+  @include mixins.mobile {
     &.rounded {
-        padding: 0;
-        width: 50px;
-        height: auto;
-        aspect-ratio: 1/1;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      width: 25px;
     }
 
-    &.bordered {
-        border: 1px solid variables.$gray-dark;
+    img {
+      width: 6px;
     }
-
-    &.shadowed {
-        box-shadow: variables.$shadow-md;
-    }
+  }
 }

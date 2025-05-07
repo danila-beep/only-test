@@ -93,5 +93,29 @@
     &__buttons {
       display: none;
     }
+
+    &__pagination {
+      position: absolute;
+      bottom: -100px;
+      left: 0;
+      width: 100%;
+      height: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: rgba(variables.$gray-dark, 0.5);
+
+        &.active {
+          background-color: variables.$gray-dark;
+        }
+      }
+    }
   }
 }

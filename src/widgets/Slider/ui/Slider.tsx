@@ -16,9 +16,10 @@ export const Slider = ({ data }: { data: ITimelineEvent[] }) => {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const prevDataRef = useRef<ITimelineEvent[]>(data);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [activeIndex, setActiveIndex] = useState(0);
   
   // Создаем строковое представление данных для сравнения
   const dataString = useMemo(() => JSON.stringify(data), [data]);
@@ -90,6 +91,7 @@ export const Slider = ({ data }: { data: ITimelineEvent[] }) => {
     if (!swiper || isAnimating) return;
     setIsBeginning(swiper.isBeginning);
     setIsEnd(swiper.isEnd);
+    setActiveIndex(swiper.activeIndex);
   };
 
   const handlePrev = () => {
@@ -159,6 +161,15 @@ export const Slider = ({ data }: { data: ITimelineEvent[] }) => {
             <img src={"/assets/icons/arrow-right.svg"} alt="arrow-right" />
           </Button>
         </div>
+        {
+          isMobile && (
+            <div className={classes.slider__controls__pagination}>
+                {Array.from({length: data.length}, (_, index) => (
+                  <span key={index} className={index === activeIndex ? classes.active : ""}></span>
+                ))}
+            </div>
+          )
+        }
       </div>
     </div>
   );

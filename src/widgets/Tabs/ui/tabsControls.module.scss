@@ -30,6 +30,13 @@
   }
 
   @include mixins.mobile {
+    position: absolute;
+    bottom: -280px;
     margin-top: 0px;
+    gap: 10px;
+
+    &__buttons {
+      gap: 8px;
+    }
   }
 }
