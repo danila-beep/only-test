@@ -29,8 +29,8 @@ export const Tabs = ({ data, activeTab, setActiveTab }: TabsProps) => {
 
   const yearRange = useMemo(() => {
     const currentPeriod = data[activeTab - 1];
-    const firstYear = currentPeriod.events[0].date.getFullYear();
-    const lastYear = currentPeriod.events[currentPeriod.events.length - 1].date.getFullYear();
+    const firstYear = new Date(currentPeriod.events[0].date).getFullYear();
+    const lastYear = new Date(currentPeriod.events[currentPeriod.events.length - 1].date).getFullYear();
     return { from: firstYear, to: lastYear };
   }, [data, activeTab]);
 

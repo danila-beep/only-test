@@ -7,27 +7,27 @@ export const MOCK_TIMELINE: Timeline = [
     events: [
       {
         id: "1",
-        date: new Date("1927"),
+        date: "1927-01-01",
         description: "Выход первого звукового фильма 'Певец джаза' (The Jazz Singer)",
       },
       {
         id: "2",
-        date: new Date("1939"),
+        date: "1939-01-01",
         description: "Премьера фильма 'Унесённые ветром', ставшего классикой мирового кинематографа",
       },
       {
         id: "3",
-        date: new Date("1977"),
-        description: "Выход первого эпизода 'Звёздных войн', революция в области спецэффектов",
+        date: "1977-01-01",
+        description: "Выход первого эпизода 'Звёздных войн', революционна в области спецэффектов",
       },
       {
         id: "4",
-        date: new Date("1995"),
+        date: "1995-01-01",
         description: "Выход 'Истории игрушек' - первого полнометражного компьютерного анимационного фильма",
       },
       {
         id: "5",
-        date: new Date("2009"),
+        date: "2009-01-01",
         description: "Премьера фильма 'Аватар', установившего новые стандарты 3D-технологий в кино",
       }
     ],
@@ -38,27 +38,27 @@ export const MOCK_TIMELINE: Timeline = [
     events: [
       {
         id: "1",
-        date: new Date("1929"),
+        date: "1929-01-01",
         description: "Эрнест Хемингуэй публикует роман 'Прощай, оружие!'",
       },
       {
         id: "2",
-        date: new Date("1947"),
+        date: "1947-01-01",
         description: "Публикация 'Дневника Анны Франк', ставшего символом жертв Холокоста",
       },
       {
         id: "3",
-        date: new Date("1957"),
+        date: "1957-01-01",
         description: "Борис Пастернак получает Нобелевскую премию за роман 'Доктор Живаго'",
       },
       {
         id: "4",
-        date: new Date("1997"),
+        date: "1997-01-01",
         description: "Выход первой книги о Гарри Поттере 'Философский камень'",
       },
       {
         id: "5",
-        date: new Date("2006"),
+        date: "2006-01-01",
         description: "Орхан Памук получает Нобелевскую премию по литературе",
       }
     ],
@@ -69,27 +69,27 @@ export const MOCK_TIMELINE: Timeline = [
     events: [
       {
         id: "1",
-        date: new Date("1972"),
+        date: "1972-01-01",
         description: "Выпуск игры Pong - первой коммерчески успешной видеоигры",
       },
       {
         id: "2",
-        date: new Date("1985"),
+        date: "1985-01-01",
         description: "Выход консоли Nintendo Entertainment System (NES) и игры Super Mario Bros",
       },
       {
         id: "3",
-        date: new Date("1996"),
+        date: "1996-01-01",
         description: "Появление Pokemon Red и Blue, начало феномена Pokemon",
       },
       {
         id: "4",
-        date: new Date("2004"),
+        date: "2004-01-01",
         description: "Запуск World of Warcraft, определившей развитие MMORPG",
       },
       {
         id: "5",
-        date: new Date("2011"),
+        date: "2011-01-01",
         description: "Выход Minecraft, ставшей самой продаваемой видеоигрой всех времён",
       }
     ],
@@ -100,27 +100,27 @@ export const MOCK_TIMELINE: Timeline = [
     events: [
       {
         id: "1",
-        date: new Date("1905"),
+        date: "1905-01-01",
         description: "Альберт Эйнштейн публикует специальную теорию относительности",
       },
       {
         id: "2",
-        date: new Date("1953"),
+        date: "1953-01-01",
         description: "Джеймс Уотсон и Фрэнсис Крик открывают структуру ДНК",
       },
       {
         id: "3",
-        date: new Date("1969"),
+        date: "1969-01-01",
         description: "Первая высадка человека на Луну - миссия Apollo 11",
       },
       {
         id: "4",
-        date: new Date("1990"),
+        date: "1990-01-01",
         description: "Запуск космического телескопа Хаббл",
       },
       {
         id: "5",
-        date: new Date("2012"),
+        date: "2012-01-01",
         description: "Открытие бозона Хиггса в ЦЕРНе",
       }
     ],
@@ -131,27 +131,27 @@ export const MOCK_TIMELINE: Timeline = [
     events: [
       {
         id: "1",
-        date: new Date("1936"),
+        date: "1936-01-01",
         description: "Джесси Оуэнс выигрывает 4 золотые медали на Олимпийских играх в Берлине",
       },
       {
         id: "2",
-        date: new Date("1980"),
+        date: "1980-01-01",
         description: "Олимпийские игры в Москве - первая Олимпиада в СССР",
       },
       {
         id: "3",
-        date: new Date("1992"),
+        date: "1992-01-01",
         description: "Американская 'Dream Team' по баскетболу на Олимпиаде в Барселоне",
       },
       {
         id: "4",
-        date: new Date("2008"),
+        date: "2008-01-01",
         description: "Усэйн Болт устанавливает мировой рекорд в беге на 100 метров",
       },
       {
         id: "5",
-        date: new Date("2018"),
+        date: "2018-01-01",
         description: "Чемпионат мира по футболу в России",
       }
     ],
@@ -162,27 +162,27 @@ export const MOCK_TIMELINE: Timeline = [
     events: [
       {
         id: "1",
-        date: new Date("1947"),
+        date: "1947-01-01",
         description: "Создание первого транзистора в Bell Labs",
       },
       {
         id: "2",
-        date: new Date("1969"),
+        date: "1969-01-01",
         description: "Создание ARPANET - предшественника современного интернета",
       },
       {
         id: "3",
-        date: new Date("1981"),
+        date: "1981-01-01",
         description: "IBM выпускает первый персональный компьютер",
       },
       {
         id: "4",
-        date: new Date("2007"),
+        date: "2007-01-01",
         description: "Презентация первого iPhone, революция в мире смартфонов",
       },
       {
         id: "5",
-        date: new Date("2011"),
+        date: "2011-01-01",
         description: "Watson от IBM побеждает чемпионов в игре Jeopardy!, демонстрируя возможности ИИ",
       }
     ],

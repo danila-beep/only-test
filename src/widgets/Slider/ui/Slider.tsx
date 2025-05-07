@@ -126,11 +126,11 @@ export const Slider = ({ data }: { data: TimelineEvent[] }) => {
       >
         {data.map((item, index) => (
           <SwiperSlide 
-            key={`${item.date.getTime()}-${index}`}
+            key={`${new Date(item.date).getTime()}-${index}`}
             className={classes.slider__slide}
           >
             <DateCard
-              year={item.date.getFullYear().toString()}
+              year={new Date(item.date).getFullYear().toString()}
               text={item.description}
             />
           </SwiperSlide>

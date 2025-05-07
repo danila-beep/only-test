@@ -1,6 +1,6 @@
 export interface TimelineEvent {
   id: string;
-  date: Date;
+  date: string;
   description: string;
 }
 
@@ -38,7 +38,7 @@ export const validateTimeline = (timeline: Timeline): boolean => {
     }
 
     // Проверка сортировки дат
-    const dates = period.events.map(event => event.date.getTime());
+    const dates = period.events.map(event => new Date(event.date).getTime());
     const sortedDates = [...dates].sort((a, b) => a - b);
     if (!dates.every((date, index) => date === sortedDates[index])) {
       console.error(`Events in period ${period.id} are not sorted by date`);
