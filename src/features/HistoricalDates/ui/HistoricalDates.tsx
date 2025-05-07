@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 
 import { Title } from "@shared/ui/Title/Title";
 import { Timeline, validateTimeline } from "@shared/types/timeline";

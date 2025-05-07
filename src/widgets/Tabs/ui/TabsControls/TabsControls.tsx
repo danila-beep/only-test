@@ -2,7 +2,7 @@ import React from "react";
 
 import classes from "./tabsControls.module.scss";
 import { Button } from "@shared/ui/Button/Button";
-
+import { useAssetPath } from "@shared/lib/hooks/useAssetPath";
 export const TabsControls = ({
   activeTab,
   totalTabs,
@@ -14,6 +14,8 @@ export const TabsControls = ({
   handlePrevTab: () => void;
   handleNextTab: () => void;
 }) => {
+  const getAssetPath = useAssetPath;
+
   return (
     <div className={classes.tabs__controls}>
       <div className={classes.tabs__controls__pagination}>
@@ -26,7 +28,10 @@ export const TabsControls = ({
           styleVariant="bordered"
           onClick={handlePrevTab}
         >
-          <img src={"/assets/icons/arrow-left.svg"} alt="arrow left" />
+          <img
+            src={getAssetPath("/assets/icons/arrow-left.svg")}
+            alt="arrow left"
+          />
         </Button>
         <Button
           disabled={activeTab === totalTabs}
@@ -34,7 +39,10 @@ export const TabsControls = ({
           styleVariant="bordered"
           onClick={handleNextTab}
         >
-          <img src={"/assets/icons/arrow-right.svg"} alt="arrow right" />
+          <img
+            src={getAssetPath("/assets/icons/arrow-right.svg")}
+            alt="arrow right"
+          />
         </Button>
       </div>
     </div>

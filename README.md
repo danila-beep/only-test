@@ -66,7 +66,7 @@ const timelineData: Timeline = [
     events: [
       {
         id: "1",
-        date: new Date("2020"),
+        date: "1927-01-01",,
         description: "Описание события"
       }
       // ... другие события

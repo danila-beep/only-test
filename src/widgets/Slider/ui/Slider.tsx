@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import { TimelineEvent } from "@shared/types/timeline";
 import { FreeMode } from "swiper/modules";
 import { Button } from "@shared/ui/Button/Button";
 import gsap from "gsap";
+import { useAssetPath } from "@shared/lib/hooks/useAssetPath";
 
 import classes from "./slider.module.scss";
 import "swiper/css";
@@ -16,17 +17,65 @@ export const Slider = ({ data }: { data: TimelineEvent[] }) => {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const prevDataRef = useRef<TimelineEvent[]>(data);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [activeIndex, setActiveIndex] = useState(0);
+  const initializeTimeout = useRef<NodeJS.Timeout>();
   
   const dataString = useMemo(() => JSON.stringify(data), [data]);
   const prevDataString = useRef(dataString);
 
+  const getAssetPath = useAssetPath;
+
+  const updateSwiper = useCallback(() => {
+    if (swiper && isInitialized) {
+      try {
+        swiper.update();
+      } catch (error) {
+        console.error('Error updating swiper:', error);
+      }
+    }
+  }, [swiper, isInitialized]);
+
+  // Обработка инициализации Swiper
+  const handleSwiper = (swiperInstance: SwiperType) => {
+    setSwiper(swiperInstance);
+    // Даем время на полную инициализацию
+    setTimeout(() => {
+      setIsInitialized(true);
+    }, 100);
+  };
+
+  // Обновление при изменении данных
+  useEffect(() => {
+    if (!isInitialized) return;
+
+    if (swiper) {
+      try {
+        updateSwiper();
+        
+        // Дополнительное обновление через timeout для гарантии
+        initializeTimeout.current = setTimeout(() => {
+          updateSwiper();
+        }, 100);
+      } catch (error) {
+        console.error('Error in data effect:', error);
+      }
+    }
+
+    return () => {
+      if (initializeTimeout.current) {
+        clearTimeout(initializeTimeout.current);
+      }
+    };
+  }, [swiper, data, isInitialized, updateSwiper]);
+
   useEffect(() => { 
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
+      updateSwiper();
     };
 
     window.addEventListener("resize", handleResize);
@@ -34,10 +83,10 @@ export const Slider = ({ data }: { data: TimelineEvent[] }) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [updateSwiper]);
 
   useEffect(() => {
-    if (!containerRef.current || isAnimating) return;
+    if (!containerRef.current || isAnimating || !isInitialized) return;
 
     if (prevDataString.current !== dataString) {
       setIsAnimating(true);
@@ -48,6 +97,7 @@ export const Slider = ({ data }: { data: TimelineEvent[] }) => {
           setIsAnimating(false);
           prevDataRef.current = data;
           prevDataString.current = dataString;
+          updateSwiper();
         }
       });
 
@@ -58,7 +108,7 @@ export const Slider = ({ data }: { data: TimelineEvent[] }) => {
         stagger: 0.05,
         ease: "power2.inOut",
         onComplete: () => {
-          swiper?.update();
+          updateSwiper();
         }
       });
 
@@ -78,9 +128,7 @@ export const Slider = ({ data }: { data: TimelineEvent[] }) => {
         }
       );
     }
-
-    swiper?.update();
-  }, [dataString, isAnimating, swiper, data, isMobile]);
+  }, [dataString, isAnimating, swiper, data, isMobile, isInitialized, updateSwiper]);
 
   const handleSlideChange = () => {
     if (!swiper || isAnimating) return;
@@ -90,13 +138,13 @@ export const Slider = ({ data }: { data: TimelineEvent[] }) => {
   };
 
   const handlePrev = () => {
-    if (!isAnimating) {
+    if (!isAnimating && isInitialized) {
       swiper?.slidePrev();
     }
   };
 
   const handleNext = () => {
-    if (!isAnimating) {
+    if (!isAnimating && isInitialized) {
       swiper?.slideNext();
     }
   };
@@ -113,7 +161,9 @@ export const Slider = ({ data }: { data: TimelineEvent[] }) => {
           sticky: false,
         }}
         watchSlidesProgress={true}
-        onSwiper={setSwiper}
+        observer={true}
+        observeParents={true}
+        onSwiper={handleSwiper}
         onSlideChange={handleSlideChange}
         onReachBeginning={() => !isAnimating && setIsBeginning(true)}
         onReachEnd={() => !isAnimating && setIsEnd(true)}
@@ -143,25 +193,25 @@ export const Slider = ({ data }: { data: TimelineEvent[] }) => {
             variant="rounded"
             styleVariant="shadowed"
             onClick={handlePrev}
-            disabled={isBeginning || isAnimating}
+            disabled={isBeginning || isAnimating || !isInitialized}
           >
-            <img src={"/assets/icons/arrow-left.svg"} alt="arrow-left" />
+            <img src={getAssetPath('/assets/icons/arrow-left.svg')} alt="arrow-left" />
           </Button>
           <Button
             variant="rounded"
             styleVariant="shadowed"
             onClick={handleNext}
-            disabled={isEnd || isAnimating}
+            disabled={isEnd || isAnimating || !isInitialized}
           >
-            <img src={"/assets/icons/arrow-right.svg"} alt="arrow-right" />
+            <img src={getAssetPath('/assets/icons/arrow-right.svg')} alt="arrow-right" />
           </Button>
         </div>
         {
           isMobile && (
             <div className={classes.slider__controls__pagination}>
-                {Array.from({length: data.length}, (_, index) => (
-                  <span key={index} className={index === activeIndex ? classes.active : ""}></span>
-                ))}
+              {Array.from({length: data.length}, (_, index) => (
+                <span key={index} className={index === activeIndex ? classes.active : ""}></span>
+              ))}
             </div>
           )
         }

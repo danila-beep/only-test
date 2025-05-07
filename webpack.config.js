@@ -14,8 +14,8 @@ module.exports = (env, argv) => {
       path: path.resolve(__dirname, 'dist'),
       filename: isProduction ? '[name].[contenthash].js' : '[name].js',
       clean: true,
-      publicPath: './',
-      assetModuleFilename: 'assets/[name].[hash][ext][query]'
+      publicPath: isProduction ? './' : '/',
+      assetModuleFilename: 'assets/[name][ext][query]'
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
@@ -29,6 +29,7 @@ module.exports = (env, argv) => {
       }
     },
     devtool: isProduction ? 'source-map' : 'eval-source-map',
+    mode: isProduction ? 'production' : 'development',
     module: {
       rules: [
         {
@@ -39,7 +40,12 @@ module.exports = (env, argv) => {
         {
           test: /\.(css|scss)$/,
           use: [
-            isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+            isProduction ? {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                esModule: false
+              }
+            } : 'style-loader',
             {
               loader: 'css-loader',
               options: {
@@ -48,7 +54,8 @@ module.exports = (env, argv) => {
                     ? '[hash:base64:5]' 
                     : '[name]__[local]--[hash:base64:5]'
                 },
-                sourceMap: !isProduction
+                sourceMap: !isProduction,
+                importLoaders: 1
               }
             },
             {
@@ -85,17 +92,38 @@ module.exports = (env, argv) => {
       minimizer: [
         new TerserPlugin({
           terserOptions: {
+            compress: {
+              drop_console: isProduction,
+              drop_debugger: isProduction
+            },
             format: {
-              comments: false,
+              comments: !isProduction,
             },
           },
           extractComments: false,
         }),
-        new CssMinimizerPlugin(),
+        new CssMinimizerPlugin({
+          minimizerOptions: {
+            preset: [
+              'default',
+              {
+                discardComments: { removeAll: true },
+              },
+            ],
+          },
+        }),
       ],
       splitChunks: {
         chunks: 'all',
         name: false,
+        cacheGroups: {
+          styles: {
+            name: 'styles',
+            type: 'css/mini-extract',
+            chunks: 'all',
+            enforce: true,
+          },
+        },
       },
     },
     plugins: [
@@ -112,11 +140,17 @@ module.exports = (env, argv) => {
           minifyJS: true,
           minifyCSS: true,
           minifyURLs: true,
-        } : false
+        } : false,
+        templateParameters: {
+          isProduction: isProduction,
+          publicPath: isProduction ? '.' : ''
+        }
       }),
       ...(isProduction ? [
         new MiniCssExtractPlugin({
           filename: 'css/[name].[contenthash].css',
+          chunkFilename: 'css/[id].[contenthash].css',
+          ignoreOrder: true,
         }),
         new CopyWebpackPlugin({
           patterns: [
@@ -128,8 +162,8 @@ module.exports = (env, argv) => {
               },
             },
             {
-              from: 'public/favicon.ico',
-              to: 'favicon.ico',
+              from: 'public/assets',
+              to: 'assets',
             }
           ],
         }),
