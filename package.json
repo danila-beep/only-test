@@ -2,6 +2,7 @@
   "name": "react-typescript-webpack",
   "version": "1.0.0",
   "description": "Front-end Only",
+  "homepage": ".",
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve --mode development --open",

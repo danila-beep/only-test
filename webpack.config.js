@@ -14,7 +14,7 @@ module.exports = (env, argv) => {
       path: path.resolve(__dirname, 'dist'),
       filename: isProduction ? '[name].[contenthash].js' : '[name].js',
       clean: true,
-      publicPath: isProduction ? '/' : '/',
+      publicPath: './',
       assetModuleFilename: 'assets/[name].[hash][ext][query]'
     },
     resolve: {
@@ -127,6 +127,10 @@ module.exports = (env, argv) => {
                 ignore: ['**/index.html'],
               },
             },
+            {
+              from: 'public/favicon.ico',
+              to: 'favicon.ico',
+            }
           ],
         }),
       ] : []),
